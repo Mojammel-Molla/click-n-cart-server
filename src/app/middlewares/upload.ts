@@ -1,9 +1,9 @@
-import multer from "multer";
-import path from "path";
-import { v2 as cloudinary } from "cloudinary";
-import { TCloudinaryResponse, TFile } from "../types";
-import fs from "fs";
-import { local_config } from "../config";
+import multer from 'multer';
+import path from 'path';
+import { v2 as cloudinary } from 'cloudinary';
+import { TCloudinaryResponse, TFile } from '../types';
+import fs from 'fs';
+import { local_config } from '../config';
 import { CloudinaryStorage } from 'multer-storage-cloudinary';
 
 cloudinary.config({
@@ -12,7 +12,7 @@ cloudinary.config({
   api_secret: local_config.cloudinary_api_secret,
 });
 
-
+// image storage
 const storage = new CloudinaryStorage({
   cloudinary: cloudinary,
 });
@@ -25,12 +25,15 @@ export const cloudinary_uploader = async (
   if (file === undefined) return;
 
   return new Promise((resolve, reject) => {
-    cloudinary.uploader.upload(file.path, (error: Error, result: TCloudinaryResponse) => {
-      if (error) {
-        reject(error);
-      } else {
-        resolve(result);
+    cloudinary.uploader.upload(
+      file.path,
+      (error: Error, result: TCloudinaryResponse) => {
+        if (error) {
+          reject(error);
+        } else {
+          resolve(result);
+        }
       }
-    });
+    );
   });
 };
