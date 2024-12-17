@@ -1,12 +1,13 @@
-import { Server } from 'http';
-import app from './app';
+import { Server } from "http";
+import app from "./app";
+import { local_config } from "./app/config";
 
-const port = 3000;
+let server: Server;
 
-async function main() {
-  const server: Server = app.listen(port, () => {
-    console.log('cartNclick is listening on port ', port);
+const main = async () => {
+  server = app.listen(local_config.port, () => {
+    console.log("Hekto Server Running on port: ", local_config.port);
   });
-}
+};
 
 main();
